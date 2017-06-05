@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : _MonoBehaviour {
     private const double MSC2SEC = 1000;
-    private const int COUNT_DOWN = 2;
+    private const int COUNT_DOWN = 1;
 
     public static float SPEED_X = 0.55f;
     public static bool Play { get; private set; }
@@ -45,7 +45,7 @@ public class GameManager : _MonoBehaviour {
             return;
         }
 
-        if (!Play)
+        if ((Input.GetKey(KeyCode.A) || Input.GetMouseButton(0)) && !Play)
         {
             //Debug.LogWarning(this.GetMethodName() + "!!!START!!!\t" + (DateTime.Now - st).TotalMilliseconds);
             Play = true;

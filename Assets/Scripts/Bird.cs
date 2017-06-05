@@ -24,7 +24,14 @@ public class Bird : _MonoBehaviour
     public GameObject gounds;
 
 
-    private bool collide = false;
+    private bool dead = false;
+
+    public bool Dead
+    {
+        get { return dead; }
+        set { dead = value; }
+    }
+
     private float delta;
 
     public Rigidbody rb;
@@ -45,7 +52,7 @@ public class Bird : _MonoBehaviour
 
         transform.rotation = Quaternion.identity;
 
-        collide = false;
+        Dead = false;
     }
 
     // Use this for initialization
@@ -59,13 +66,13 @@ public class Bird : _MonoBehaviour
     void EnableRagdoll()
     {
         if (rb != null && rb.isKinematic) rb.isKinematic = false;
-        if (rb != null && !rb.detectCollisions) rb.detectCollisions = true;
+        //if (rb != null && !rb.detectCollisions) rb.detectCollisions = true;
     }
 
     void DisableRagdoll()
     {
         if (rb != null && !rb.isKinematic) rb.isKinematic = true;
-        if (rb != null && rb.detectCollisions) rb.detectCollisions = false;
+        //if (rb != null && rb.detectCollisions) rb.detectCollisions = false;
     }
 
     void PitchBird(float delta)
@@ -91,12 +98,18 @@ public class Bird : _MonoBehaviour
         float angle = 0.0f;
         Vector3 axis = Vector3.zero;
         transform.rotation.ToAngleAxis(out angle, out axis);
-        Debug.Log(this.GetMethodName() + ":" + delta.ToString("f4") + ":" + rotation.z.ToString("f4") + ":angle:" + angle + ":" + (angle * axis.z) + ":rotation:" + rotation + ":axis:" + axis + ":eulerAngles:" + eulerAngles);
+
+        //Debug.Log(this.GetMethodName() + ":" + delta.ToString("f4") + ":" + (angle * axis.z).ToString("f4")/* + ":" + rotation.z.ToString("f4")*/ + ":angle:" + angle + ":rotation:" + rotation + ":axis:" + axis + ":eulerAngles:" + eulerAngles);
+
+        //make angle(+-)
+        angle *= axis.z;
+
         //if ((delta > 0.0f && rotation.z > 0.3f) || (delta < 0.0f && rotation.z < -0.7f))
-        if ((angle * axis.z) > 30.0f || (angle * axis.z) < -90.0f)
+        if ((angle > 30.0f || angle < -90.0f) && !Dead)
         {
             return;
         }
+
         transform.Rotate(pitch);
     }
 
@@ -157,7 +170,7 @@ public class Bird : _MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
-        collide = true;
+        Dead = true;
     }
 
     //private void OnTriggerEnter(Collider other)
