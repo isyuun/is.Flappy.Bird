@@ -23,6 +23,8 @@ public class Pipes : _MonoBehaviour
     public GameObject skys;
     public GameObject gounds;
 
+    private Animator ani;
+
     void Reset()
     {
         GAP_X = GetTotalMeshFilterBounds(transform).size.x;
@@ -46,6 +48,7 @@ public class Pipes : _MonoBehaviour
     void Start()
     {
         pos = transform.position;
+        ani = GetComponent<Animator>();
         Reset();
     }
 
