@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bird : _MonoBehaviour
 {
-    private Vector3 pos;
+    private Vector3 org;
 
     private const float GRAVITY_ACCELATION = 9.8f;
     private const float GRAVITY_UNIT = 10.0f;
@@ -13,7 +13,7 @@ public class Bird : _MonoBehaviour
     private const float GRAVITY_JUMP = 30.0f;
 
     private float v = 0.0f;
-    private Vector3 v3Pos;
+    private Vector3 pos;
     private float g = GRAVITY_ACCELATION * GRAVITY_UNIT;
 
     private float MIN_LEVEL = 0.2f;
@@ -28,7 +28,18 @@ public class Bird : _MonoBehaviour
 
     private Rigidbody rb;
 
-    void Reset()
+    private bool dead = false;
+
+    public bool Dead { get { return dead; } private set { dead = value; } }
+
+    protected virtual void Die()
+    {
+        GameManager.Play = false;
+        dead = true;
+        EnableRagdoll();
+    }
+
+    protected virtual void Reset()
     {
         DisableRagdoll();
 
@@ -39,10 +50,12 @@ public class Bird : _MonoBehaviour
 
         //Debug.LogWarning(this.GetMethodName() + "\t" + "MIN_LEVEL:" + MIN_LEVEL + ", MAX_LEVEL:" + MAX_LEVEL/* + " - " + "MIN_Y:" + MIN_Y + ", MAX_Y:" + MAX_Y*/);
 
-        transform.position = pos;
-        v3Pos = transform.position;
+        transform.position = this.org;
+        this.pos = transform.position;
 
         transform.rotation = Quaternion.identity;
+
+        dead = false;
     }
 
     void EnableRagdoll()
@@ -68,7 +81,7 @@ public class Bird : _MonoBehaviour
         float rotationSpeed = 200.0f;
         if (delta > 0.0f)
         {
-            rotationSpeed *= 2;
+            rotationSpeed *= 4;
         }
 
         //calculate pitch
@@ -86,9 +99,9 @@ public class Bird : _MonoBehaviour
         //make angle(+-)
         angle *= axis.z;
 
-        if (GameManager.Play)
+        if (!Dead)
         {
-            if ((angle > 30.0f || angle < -90.0f))
+            if ((angle > 35.0f || angle < -90.0f))
             {
                 return;
             }
@@ -100,21 +113,21 @@ public class Bird : _MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
-        pos = transform.position;
-        rb = GetComponent<Rigidbody>();
+        this.org = transform.position;
+        this.rb = GetComponent<Rigidbody>();
         Reset();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        //test
-        if (GameManager.Test && Input.GetKeyDown(KeyCode.Space))
+        if (GameManager.ActionKeyDown() && !Dead)
         {
-            Reset();
+            //Debug.LogWarning(this.GetMethodName() + "!!!START!!!\t" + (DateTime.Now - st).TotalMilliseconds);
+            GameManager.Play = true;
         }
 
-        if (!GameManager.Play /*|| collide*/)
+        if (!GameManager.Play && !Dead)
         {
             return;
         }
@@ -122,7 +135,8 @@ public class Bird : _MonoBehaviour
         float up = 0.0f;  // Upward force
 
         float t = Time.deltaTime;
-        if (ActionKeyDown())
+
+        if (GameManager.ActionKeyDown() && !Dead)
         {
             up = 8.0f;  // Apply some upward force
             v = 0.0f;
@@ -136,37 +150,33 @@ public class Bird : _MonoBehaviour
 
         //define bird position
         v = v + (up - g) * t;
-        v3Pos.y += delta;
+        this.pos.y += delta;
 
         //when bird collide
-        if (v3Pos.y <= MIN_LEVEL)
+        if (this.pos.y <= MIN_LEVEL)
         {
-            v3Pos.y = MIN_LEVEL;
+            this.pos.y = MIN_LEVEL;
             v = -v * GRAVITY_DRAG;
-            //v = 0.0f;
         }
-        else if (v3Pos.y >= MAX_LEVEL)
+        else if (this.pos.y >= MAX_LEVEL)
         {
-            v3Pos.y = MAX_LEVEL;
+            this.pos.y = MAX_LEVEL;
             v = -v * GRAVITY_DRAG;
-            //v = 0.0f;
         }
 
-        transform.position = v3Pos;
-    }
+        if (Dead)
+        {
+            this.pos.z = -10.0f;
+        }
 
-    protected bool ActionKeyDown()
-    {
-        return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) || Input.GetMouseButton(0); //test
-        return Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl) || Input.GetMouseButtonDown(0);
+        transform.position = this.pos;
     }
 
     private void CheckCollision(Collider collider)
     {
         if (collider.tag == "PIPE")
         {
-            GameManager.Play = false;
-            EnableRagdoll();
+            Die();
         }
     }
 

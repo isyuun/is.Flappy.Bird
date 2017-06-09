@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : _MonoBehaviour {
     private const double MSC2SEC = 1000;
@@ -12,11 +13,8 @@ public class GameManager : _MonoBehaviour {
 
     private static DateTime st;
 
-    public static bool Test { get; private set; }
-
     private void Awake()
     {
-        Test = true;
     }
 
     private void Reset()
@@ -33,10 +31,10 @@ public class GameManager : _MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        //test
-        if (GameManager.Test && Input.GetKeyDown(KeyCode.Space))
+        if (GameManager.ResetKeyDown())
         {
-            Reset();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            return;
         }
 
         if ((DateTime.Now - st).TotalMilliseconds < COUNT_DOWN * MSC2SEC)
@@ -45,11 +43,22 @@ public class GameManager : _MonoBehaviour {
             return;
         }
 
-        if ((Input.GetKey(KeyCode.A) || Input.GetMouseButton(0)) && !Play)
+        if (GameManager.ActionKeyDown())
         {
             //Debug.LogWarning(this.GetMethodName() + "!!!START!!!\t" + (DateTime.Now - st).TotalMilliseconds);
-            Play = true;
+            GameManager.Play = true;
         }
     }
 
+    public static bool ResetKeyDown()
+    {
+        return (!GameManager.Play && Input.GetKeyDown(KeyCode.Space));
+    }
+
+
+    public static bool ActionKeyDown()
+    {
+        //return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) || Input.GetMouseButton(0); //test
+        return Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl) || Input.GetMouseButtonDown(0);
+    }
 }

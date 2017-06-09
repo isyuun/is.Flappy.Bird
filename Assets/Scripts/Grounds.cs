@@ -11,7 +11,7 @@ public class Grounds : _MonoBehaviour
     {
         if (ani != null)
         {
-            ani.Play("GroundScroll");
+            ani.Play("GroundsScroll");
             ani.SetBool("IsScroll", true);
         }
     }
@@ -41,12 +41,6 @@ public class Grounds : _MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //test
-        if (GameManager.Test && Input.GetKeyDown(KeyCode.Space))
-        {
-            Reset();
-        }
-
         if (GameManager.Play)
         {
             StartAnim();
@@ -55,6 +49,5 @@ public class Grounds : _MonoBehaviour
         {
             StopAnim();
         }
-
     }
 }

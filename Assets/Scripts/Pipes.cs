@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Pipes : _MonoBehaviour
 {
-    private Vector3 pos;
+    private Vector3 org;
 
-    private Vector3 v3Pos;
+    private Vector3 pos;
 
     private float GAP_X;
     private float MIN_X;
@@ -36,45 +36,39 @@ public class Pipes : _MonoBehaviour
 
         //Debug.LogWarning(this.GetMethodName() + "\t" + "MIN_X:" + MIN_X + ", MAX_X:" + MAX_X + " - " + "MIN_Y:" + MIN_Y + ", MAX_Y:" + MAX_Y);
 
-        Vector3 pos = transform.position;
-        pos.x = MAX_X;
-        pos.y = UnityEngine.Random.Range(MIN_Y, MAX_Y);
-        transform.position = pos;
+        this.pos = this.org;
+        //this.pos.x = MAX_X;
+        this.pos.y = UnityEngine.Random.Range(MIN_Y, MAX_Y);
+        transform.position = this.pos;
 
-        v3Pos = transform.position;
+        //Debug.Log(this.GetMethodName() + ":" + this.pos);
     }
 
     // Use this for initialization
     void Start()
     {
-        pos = transform.position;
-        ani = GetComponent<Animator>();
+        this.org = transform.position;
+        this.ani = GetComponent<Animator>();
         Reset();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //test
-        if (GameManager.Test && Input.GetKeyDown(KeyCode.Space))
-        {
-            Reset();
-        }
-
         if (!GameManager.Play)
         {
             return;
         }
 
-        v3Pos.x -= GameManager.SPEED_X;
+        this.pos.x -= GameManager.SPEED_X;
 
-        if (v3Pos.x <= MIN_X)
+        if (this.pos.x <= MIN_X)
         {
-            v3Pos.x = MAX_X;
-            v3Pos.y = UnityEngine.Random.Range(MIN_Y, MAX_Y);
+            this.pos.x = MAX_X;
+            this.pos.y = UnityEngine.Random.Range(MIN_Y, MAX_Y);
             //v3Pos.y = MIN_Y;
         }
 
-        transform.position = v3Pos;
+        transform.position = this.pos;
     }
 }

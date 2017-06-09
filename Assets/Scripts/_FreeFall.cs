@@ -5,12 +5,12 @@ using UnityEngine;
 public class _FreeFall : MonoBehaviour
 {
     private float v = 0.0f;
-    private Vector3 v3Pos;
+    private Vector3 pos;
     private float g = 9.8f / 2.0f;
 
     void Start()
     {
-        v3Pos = transform.position;
+        this.pos = transform.position;
     }
 
     // deltaY = Vprev*t - 1/2*g*(t*t)
@@ -29,13 +29,13 @@ public class _FreeFall : MonoBehaviour
         float t = Time.deltaTime;
         float delta = v * t + (up - g) * t * t * 0.5f;
         v = v + (up - g) * t;
-        v3Pos.y += delta;
-        if (v3Pos.y < 0.0f)
+        this.pos.y += delta;
+        if (this.pos.y < 0.0f)
         {
-            v3Pos.y = 0.0f;
+            this.pos.y = 0.0f;
             v = -v * .8f;
         }
-        transform.position = v3Pos;
+        transform.position = this.pos;
 
     }
 }
