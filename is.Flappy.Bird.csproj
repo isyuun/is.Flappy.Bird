@@ -79,10 +79,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Bird.cs" />
+    <Compile Include="Assets\Scripts\Bird2.cs" />
     <Compile Include="Assets\Scripts\Camera.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Ground.cs" />
     <Compile Include="Assets\Scripts\Grounds.cs" />
+    <Compile Include="Assets\Scripts\Pipe.cs" />
     <Compile Include="Assets\Scripts\Pipes.cs" />
     <Compile Include="Assets\Scripts\Sky.cs" />
     <Compile Include="Assets\Scripts\_FreeFall.cs" />

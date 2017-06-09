@@ -8,7 +8,7 @@ public class GameManager : _MonoBehaviour {
     private const int COUNT_DOWN = 1;
 
     public static float SPEED_X = 0.55f;
-    public static bool Play { get; private set; }
+    public static bool Play { get; set; }
 
     private static DateTime st;
 

@@ -24,17 +24,9 @@ public class Bird : _MonoBehaviour
     public GameObject gounds;
 
 
-    private bool dead = false;
+    protected float delta;
 
-    public bool Dead
-    {
-        get { return dead; }
-        set { dead = value; }
-    }
-
-    private float delta;
-
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     void Reset()
     {
@@ -51,31 +43,21 @@ public class Bird : _MonoBehaviour
         v3Pos = transform.position;
 
         transform.rotation = Quaternion.identity;
-
-        Dead = false;
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-        pos = transform.position;
-        rb = GetComponent<Rigidbody>();
-        Reset();
     }
 
     void EnableRagdoll()
     {
-        if (rb != null && rb.isKinematic) rb.isKinematic = false;
+        //if (rb != null && rb.isKinematic) rb.isKinematic = false;
         //if (rb != null && !rb.detectCollisions) rb.detectCollisions = true;
     }
 
     void DisableRagdoll()
     {
-        if (rb != null && !rb.isKinematic) rb.isKinematic = true;
+        //if (rb != null && !rb.isKinematic) rb.isKinematic = true;
         //if (rb != null && rb.detectCollisions) rb.detectCollisions = false;
     }
 
-    void PitchBird(float delta)
+    protected virtual void PitchBird(float delta)
     {
         if ((this.delta * delta) < 0.0f)
         {
@@ -104,17 +86,27 @@ public class Bird : _MonoBehaviour
         //make angle(+-)
         angle *= axis.z;
 
-        //if ((delta > 0.0f && rotation.z > 0.3f) || (delta < 0.0f && rotation.z < -0.7f))
-        if ((angle > 30.0f || angle < -90.0f) && !Dead)
+        if (GameManager.Play)
         {
-            return;
+            if ((angle > 30.0f || angle < -90.0f))
+            {
+                return;
+            }
         }
 
         transform.Rotate(pitch);
     }
 
+    // Use this for initialization
+    protected virtual void Start()
+    {
+        pos = transform.position;
+        rb = GetComponent<Rigidbody>();
+        Reset();
+    }
+
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         //test
         if (GameManager.Test && Input.GetKeyDown(KeyCode.Space))
@@ -127,14 +119,10 @@ public class Bird : _MonoBehaviour
             return;
         }
 
-        //EnableRagdoll();
-
         float up = 0.0f;  // Upward force
 
         float t = Time.deltaTime;
-
-        if (Input.GetKey(KeyCode.A) || Input.GetMouseButton(0))    //test
-        //if (Input.GetKeyDown(KeyCode.A) || Input.GetMouseButtonDown(0))
+        if (ActionKeyDown())
         {
             up = 8.0f;  // Apply some upward force
             v = 0.0f;
@@ -167,14 +155,30 @@ public class Bird : _MonoBehaviour
         transform.position = v3Pos;
     }
 
+    protected bool ActionKeyDown()
+    {
+        return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) || Input.GetMouseButton(0); //test
+        return Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl) || Input.GetMouseButtonDown(0);
+    }
+
+    private void CheckCollision(Collider collider)
+    {
+        if (collider.tag == "PIPE")
+        {
+            GameManager.Play = false;
+            EnableRagdoll();
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
-        Dead = true;
+        CheckCollision(collision.collider);
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    Debug.Log(this.GetMethodName() + ":" + other.tag);
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(this.GetMethodName() + ":" + other.tag);
+        CheckCollision(other);
+    }
 }

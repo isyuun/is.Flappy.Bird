@@ -77,9 +77,4 @@ public class Pipes : _MonoBehaviour
 
         transform.position = v3Pos;
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log(this.GetMethodName() + collision.collider.tag);
-    //}
 }

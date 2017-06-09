@@ -11,6 +11,7 @@ public class Grounds : _MonoBehaviour
     {
         if (ani != null)
         {
+            ani.Play("GroundScroll");
             ani.SetBool("IsScroll", true);
         }
     }
@@ -19,6 +20,7 @@ public class Grounds : _MonoBehaviour
     {
         if (ani != null)
         {
+            ani.Play("idle");
             ani.SetBool("IsScroll", false);
         }
     }
@@ -26,7 +28,7 @@ public class Grounds : _MonoBehaviour
 
     private void Reset()
     {
-
+        StopAnim();
     }
 
     // Use this for initialization
@@ -45,11 +47,14 @@ public class Grounds : _MonoBehaviour
             Reset();
         }
 
-        if (!GameManager.Play)
+        if (GameManager.Play)
         {
-            return;
+            StartAnim();
+        }
+        else
+        {
+            StopAnim();
         }
 
-        StartAnim();
     }
 }
