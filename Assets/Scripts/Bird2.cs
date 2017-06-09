@@ -58,7 +58,7 @@ public class Bird2 : Bird
     protected override void PitchBird(float delta)
     {
         //Debug.Log(this.GetMethodName() + ":" + delta.ToString("f4"));
-        if (!Dead)
+        if (!GameManager.Dead)
         {
             if (delta > 0.0f)
             {
@@ -88,12 +88,12 @@ public class Bird2 : Bird
     {
         base.Update();
 
-        if (!GameManager.Play && !Dead)
+        if (!GameManager.Play && !GameManager.Dead)
         {
             return;
         }
 
-        if (!Dead)
+        if (!GameManager.Dead)
         {
             if (GameManager.ActionKeyDown())
             {

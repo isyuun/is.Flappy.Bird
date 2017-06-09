@@ -10,6 +10,7 @@ public class GameManager : _MonoBehaviour {
 
     public static float SPEED_X = 0.55f;
     public static bool Play { get; set; }
+    public static bool Dead { get; set; }
 
     private static DateTime st;
 
@@ -19,6 +20,7 @@ public class GameManager : _MonoBehaviour {
 
     private void Reset()
     {
+        //Debug.Log(this.GetMethodName());
         Play = false;
         st = DateTime.Now;
     }
@@ -52,13 +54,14 @@ public class GameManager : _MonoBehaviour {
 
     public static bool ResetKeyDown()
     {
-        return (!GameManager.Play && Input.GetKeyDown(KeyCode.Space));
+        //Debug.Log("ResetKeyDown()" + ":" + (Input.GetKeyDown(KeyCode.Space)));
+        return (Input.GetKeyDown(KeyCode.Space));
     }
 
 
     public static bool ActionKeyDown()
     {
-        //return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) || Input.GetMouseButton(0); //test
-        return Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl) || Input.GetMouseButtonDown(0);
+        return !GameManager.Dead && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) || Input.GetMouseButton(0)); //test
+        return !GameManager.Dead && (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl) || Input.GetMouseButtonDown(0));
     }
 }

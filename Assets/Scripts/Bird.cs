@@ -28,15 +28,11 @@ public class Bird : _MonoBehaviour
 
     private Rigidbody rb;
 
-    private bool dead = false;
-
-    public bool Dead { get { return dead; } private set { dead = value; } }
-
     protected virtual void Die()
     {
         GameManager.Play = false;
-        dead = true;
-        EnableRagdoll();
+        GameManager.Dead = true;
+        DisableRagdoll();
     }
 
     protected virtual void Reset()
@@ -55,19 +51,19 @@ public class Bird : _MonoBehaviour
 
         transform.rotation = Quaternion.identity;
 
-        dead = false;
+        GameManager.Dead = false;
     }
 
     void EnableRagdoll()
     {
-        //if (rb != null && rb.isKinematic) rb.isKinematic = false;
-        //if (rb != null && !rb.detectCollisions) rb.detectCollisions = true;
+        if (rb != null && rb.isKinematic) rb.isKinematic = false;
+        if (rb != null && !rb.detectCollisions) rb.detectCollisions = true;
     }
 
     void DisableRagdoll()
     {
-        //if (rb != null && !rb.isKinematic) rb.isKinematic = true;
-        //if (rb != null && rb.detectCollisions) rb.detectCollisions = false;
+        if (rb != null && !rb.isKinematic) rb.isKinematic = true;
+        if (rb != null && rb.detectCollisions) rb.detectCollisions = false;
     }
 
     protected virtual void PitchBird(float delta)
@@ -99,7 +95,7 @@ public class Bird : _MonoBehaviour
         //make angle(+-)
         angle *= axis.z;
 
-        if (!Dead)
+        if (!GameManager.Dead)
         {
             if ((angle > 35.0f || angle < -90.0f))
             {
@@ -121,22 +117,25 @@ public class Bird : _MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (GameManager.ActionKeyDown() && !Dead)
+        if (GameManager.ActionKeyDown())
         {
             //Debug.LogWarning(this.GetMethodName() + "!!!START!!!\t" + (DateTime.Now - st).TotalMilliseconds);
             GameManager.Play = true;
         }
 
-        if (!GameManager.Play && !Dead)
+        if (!GameManager.Play && !GameManager.Dead)
         {
             return;
         }
+
+
+        EnableRagdoll();
 
         float up = 0.0f;  // Upward force
 
         float t = Time.deltaTime;
 
-        if (GameManager.ActionKeyDown() && !Dead)
+        if (GameManager.ActionKeyDown())
         {
             up = 8.0f;  // Apply some upward force
             v = 0.0f;
@@ -164,7 +163,7 @@ public class Bird : _MonoBehaviour
             v = -v * GRAVITY_DRAG;
         }
 
-        if (Dead)
+        if (GameManager.Dead)
         {
             this.pos.z = -10.0f;
         }
@@ -172,23 +171,14 @@ public class Bird : _MonoBehaviour
         transform.position = this.pos;
     }
 
-    private void CheckCollision(Collider collider)
-    {
-        if (collider.tag == "PIPE")
-        {
-            Die();
-        }
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
-        CheckCollision(collision.collider);
+        //Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
+        Die();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(this.GetMethodName() + ":" + other.tag);
-        CheckCollision(other);
+        //Debug.Log(this.GetMethodName() + ":" + other.tag);
     }
 }
