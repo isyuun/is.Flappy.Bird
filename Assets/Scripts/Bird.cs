@@ -28,15 +28,10 @@ public class Bird : _MonoBehaviour
 
     private Rigidbody rb;
 
-    protected virtual void Die()
-    {
-        GameManager.Play = false;
-        GameManager.Dead = true;
-        DisableRagdoll();
-    }
-
     protected virtual void Reset()
     {
+        Debug.Log(this.GetMethodName());
+
         DisableRagdoll();
 
         bird = (SphereCollider)GetComponent<SphereCollider>();
@@ -52,6 +47,19 @@ public class Bird : _MonoBehaviour
         transform.rotation = Quaternion.identity;
 
         GameManager.Dead = false;
+
+        GameObject.Find("bird2d").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("sprites_73");
+    }
+
+    protected virtual void Die()
+    {
+        Debug.Log(this.GetMethodName());
+
+        GameManager.Play = false;
+        GameManager.Dead = true;
+        DisableRagdoll();
+
+        GameObject.Find("bird2d").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("bird");
     }
 
     void EnableRagdoll()
