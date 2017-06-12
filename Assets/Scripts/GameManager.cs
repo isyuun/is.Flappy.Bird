@@ -14,8 +14,14 @@ public class GameManager : _MonoBehaviour {
 
     private static DateTime st;
 
+    public static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
+
     private void Awake()
     {
+        foreach (Sprite item in Resources.LoadAll<Sprite>("Sprites/sprites"))
+        {
+            sprites.Add(item.name, item);
+        }
     }
 
     private void Reset()

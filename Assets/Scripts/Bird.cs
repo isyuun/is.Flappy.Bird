@@ -30,7 +30,7 @@ public class Bird : _MonoBehaviour
 
     protected virtual void Reset()
     {
-        Debug.Log(this.GetMethodName());
+        //Debug.Log(this.GetMethodName());
 
         DisableRagdoll();
 
@@ -48,18 +48,24 @@ public class Bird : _MonoBehaviour
 
         GameManager.Dead = false;
 
-        GameObject.Find("bird2d").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("sprites_73");
+        Sprite s = GameManager.sprites["sprites_73"];
+        SpriteRenderer r = GameObject.Find("bird2d").GetComponent<SpriteRenderer>();
+        Debug.Log(this.GetMethodName() + ":" + r + ":" + s);
+        r.sprite = s;
     }
 
     protected virtual void Die()
     {
-        Debug.Log(this.GetMethodName());
+        //Debug.Log(this.GetMethodName());
 
         GameManager.Play = false;
         GameManager.Dead = true;
         DisableRagdoll();
 
-        GameObject.Find("bird2d").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("bird");
+        Sprite s = Resources.Load<Sprite>("Splites/bird");
+        SpriteRenderer r = GameObject.Find("bird2d").GetComponent<SpriteRenderer>();
+        Debug.Log(this.GetMethodName() + ":" + r + ":" + s);
+        r.sprite = s;
     }
 
     void EnableRagdoll()
