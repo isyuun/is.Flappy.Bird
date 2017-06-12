@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : _MonoBehaviour {
+public class GameManager : _MonoBehaviour
+{
     private const double MSC2SEC = 1000;
     private const int COUNT_DOWN = 1;
 
@@ -20,7 +21,15 @@ public class GameManager : _MonoBehaviour {
     {
         foreach (Sprite item in Resources.LoadAll<Sprite>("Sprites/sprites"))
         {
-            sprites.Add(item.name, item);
+            try
+            {
+                sprites.Add(item.name, item);
+
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
         }
     }
 
@@ -31,14 +40,16 @@ public class GameManager : _MonoBehaviour {
         st = DateTime.Now;
     }
 
-    
+
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         Reset();
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         if (GameManager.ResetKeyDown())
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -87,8 +87,10 @@
     <Compile Include="Assets\Scripts\Pipe.cs" />
     <Compile Include="Assets\Scripts\Pipes.cs" />
     <Compile Include="Assets\Scripts\Sky.cs" />
+    <Compile Include="Assets\Scripts\_EventTrigger.cs" />
     <Compile Include="Assets\Scripts\_FreeFall.cs" />
     <Compile Include="Assets\Scripts\_MonoBehaviour.cs" />
+    <Compile Include="Assets\Scripts\_MouseLock.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bird : _MonoBehaviour
 {
@@ -28,11 +25,20 @@ public class Bird : _MonoBehaviour
 
     private Rigidbody rb;
 
+    private SpriteRenderer rd;
+
+    // Use this for initialization
+    protected virtual void Start()
+    {
+        this.org = transform.position;
+        this.rb = GetComponent<Rigidbody>();
+        this.rd = GameObject.Find("bird2d").GetComponent<SpriteRenderer>();
+        Reset();
+    }
+
     protected virtual void Reset()
     {
-        //Debug.Log(this.GetMethodName());
-
-        DisableRagdoll();
+        Debug.Log(this.GetMethodName());
 
         bird = (SphereCollider)GetComponent<SphereCollider>();
 
@@ -48,40 +54,60 @@ public class Bird : _MonoBehaviour
 
         GameManager.Dead = false;
 
-        Sprite s = GameManager.sprites["sprites_73"];
-        SpriteRenderer r = GameObject.Find("bird2d").GetComponent<SpriteRenderer>();
-        Debug.Log(this.GetMethodName() + ":" + r + ":" + s);
-        r.sprite = s;
+        SetBirdSprite(GameManager.sprites["sprites_73"]);
     }
 
-    protected virtual void Die()
+    protected virtual void Die(Collision collision)
     {
-        //Debug.Log(this.GetMethodName());
+        Debug.Log(this.GetMethodName() + ":" + collision + ":" + collision.collider + ":" + collision.collider.tag);
 
         GameManager.Play = false;
         GameManager.Dead = true;
         DisableRagdoll();
 
-        Sprite s = Resources.Load<Sprite>("Splites/bird");
-        SpriteRenderer r = GameObject.Find("bird2d").GetComponent<SpriteRenderer>();
-        Debug.Log(this.GetMethodName() + ":" + r + ":" + s);
-        r.sprite = s;
+        Flip();
+
+        SetBirdSprite(Resources.Load<Sprite>("Splites/bird"));
     }
+
+    private void SetBirdSprite(Sprite sprite)
+    {
+        //Debug.Log(this.GetMethodName() + ":" + rd + ":" + sprite);
+        rd.sprite = sprite;
+    }
+
+    // 캐릭터 수평 반전
+    private void Flip()
+    {
+        //Debug.Log(this.GetMethodName());
+        transform.rotation = Quaternion.identity;
+        Vector3 scale = transform.localScale;
+        scale.y = scale.y * (-1);
+        transform.localScale = scale;
+    }
+
 
     void EnableRagdoll()
     {
+        //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
         if (rb != null && rb.isKinematic) rb.isKinematic = false;
         if (rb != null && !rb.detectCollisions) rb.detectCollisions = true;
     }
 
     void DisableRagdoll()
     {
+        //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
         if (rb != null && !rb.isKinematic) rb.isKinematic = true;
         if (rb != null && rb.detectCollisions) rb.detectCollisions = false;
     }
 
     protected virtual void PitchBird(float delta)
     {
+        if (GameManager.Dead)
+        {
+            return;
+        }
+
         if ((this.delta * delta) < 0.0f)
         {
             transform.rotation = Quaternion.identity;
@@ -120,14 +146,6 @@ public class Bird : _MonoBehaviour
         transform.Rotate(pitch);
     }
 
-    // Use this for initialization
-    protected virtual void Start()
-    {
-        this.org = transform.position;
-        this.rb = GetComponent<Rigidbody>();
-        Reset();
-    }
-
     // Update is called once per frame
     protected virtual void Update()
     {
@@ -142,8 +160,10 @@ public class Bird : _MonoBehaviour
             return;
         }
 
-
-        EnableRagdoll();
+        if (!GameManager.Dead)
+        {
+            EnableRagdoll();
+        }
 
         float up = 0.0f;  // Upward force
 
@@ -188,7 +208,7 @@ public class Bird : _MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
-        Die();
+        Die(collision);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -43,9 +43,9 @@ public class Bird2 : Bird
         }
     }
 
-    protected override void Die()
+    protected override void Die(Collision collision)
     {
-        base.Die();
+        base.Die(collision);
         AniStop();
     }
 

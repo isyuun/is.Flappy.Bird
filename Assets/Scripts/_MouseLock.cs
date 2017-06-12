@@ -45,13 +45,15 @@ public class _MouseLock : _MonoBehaviour
         if (mouseLockFlag)
         {
             //잠겨 있으면 잠금 해제
-            Screen.lockCursor = true;
+            //Screen.lockCursor = true;
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
         else
         {
             //잠금이 해제되어 있다면 잠금
-            Screen.lockCursor = false;
+            //Screen.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
     }
