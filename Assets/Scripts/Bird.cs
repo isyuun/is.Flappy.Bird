@@ -5,10 +5,10 @@ public class Bird : _MonoBehaviour
 {
     private Vector3 org;
 
-    private const float GRAVITY_ACCELATION = 9.8f;
+    private const float GRAVITY_ACCELATION = 9.8f * 1.2f;
     private const float GRAVITY_UNIT = 10.0f;
     private const float GRAVITY_DRAG = 0.5f;
-    private const float GRAVITY_JUMP = 30.0f;
+    private const float GRAVITY_JUMP = 30.0f * 0.8f;
 
     private float v = 0.0f;
     private Vector3 pos;
@@ -30,7 +30,7 @@ public class Bird : _MonoBehaviour
 
     protected virtual void _Reset()
     {
-        Debug.Log(this.GetMethodName());
+        //Debug.Log(this.GetMethodName());
 
         bird = (SphereCollider)GetComponent<SphereCollider>();
 
@@ -67,7 +67,7 @@ public class Bird : _MonoBehaviour
         rd.sprite = sprite;
     }
 
-    // 캐릭터 수평 반전
+    // vertical flip
     private void Flip()
     {
         //Debug.Log(this.GetMethodName());
@@ -75,8 +75,10 @@ public class Bird : _MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.y = scale.y * (-1);
         transform.localScale = scale;
+        //move z forward
+        this.pos.z = -10.0f;
+        transform.position = this.pos;
     }
-
 
     /// <summary>
     /// use when live
@@ -84,11 +86,10 @@ public class Bird : _MonoBehaviour
     void DisableRagdoll()
     {
         //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
-        rb.useGravity = false;
+        rb.useGravity = true;
         rb.isKinematic = false;
         rb.detectCollisions = true;
     }
-
 
     /// <summary>
     /// use when dead
@@ -108,13 +109,14 @@ public class Bird : _MonoBehaviour
             return;
         }
 
-        Debug.LogWarning(this.GetMethodName() + ":" + collision + ":" + collision.collider + ":" + collision.collider.tag);
+        //Debug.LogWarning(this.GetMethodName() + ":" + collision + ":" + collision.collider + ":" + collision.collider.tag);
 
         //test
-        //EnableRagdoll(); return;
+        EnableRagdoll(); return;
 
         GameManager.Play = false;
         GameManager.Dead = true;
+
         Flip();
 
         SetBirdSprite(Resources.Load<Sprite>("Splites/bird"));
@@ -181,7 +183,8 @@ public class Bird : _MonoBehaviour
         if (GameManager.Dead)
         {
             EnableRagdoll();
-            return;
+            //test 
+            //return;
         }
         else
         {
@@ -230,12 +233,12 @@ public class Bird : _MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
+        //Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
         Die(collision);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(this.GetMethodName() + ":" + other.tag);
+        //Debug.Log(this.GetMethodName() + ":" + other.tag);
     }
 }

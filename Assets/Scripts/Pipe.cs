@@ -7,7 +7,7 @@ public class Pipe : _Move
 {
     public GameObject gounds;
 
-    private const float GAP_LEVEL = 15.0f;
+    private const float GAP_LEVEL = 20.0f;
     private const float MIN_LEVEL = -50.0f;
     private const float MAX_LEVEL = 50.0f;
 
