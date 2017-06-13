@@ -60,11 +60,10 @@ public class Bird : _MonoBehaviour
     protected virtual void Die(Collision collision)
     {
         Debug.Log(this.GetMethodName() + ":" + collision + ":" + collision.collider + ":" + collision.collider.tag);
+        DisableRagdoll();
 
         GameManager.Play = false;
         GameManager.Dead = true;
-        DisableRagdoll();
-
         Flip();
 
         SetBirdSprite(Resources.Load<Sprite>("Splites/bird"));
@@ -90,6 +89,7 @@ public class Bird : _MonoBehaviour
     void EnableRagdoll()
     {
         //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
+        if (rb != null && rb.useGravity) rb.useGravity = false;
         if (rb != null && rb.isKinematic) rb.isKinematic = false;
         if (rb != null && !rb.detectCollisions) rb.detectCollisions = true;
     }
@@ -97,6 +97,7 @@ public class Bird : _MonoBehaviour
     void DisableRagdoll()
     {
         //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
+        if (rb != null && !rb.useGravity) rb.useGravity = true;
         if (rb != null && !rb.isKinematic) rb.isKinematic = true;
         if (rb != null && rb.detectCollisions) rb.detectCollisions = false;
     }
@@ -207,12 +208,13 @@ public class Bird : _MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
-        Die(collision);
+        Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
+        //test
+        //Die(collision);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(this.GetMethodName() + ":" + other.tag);
+        Debug.Log(this.GetMethodName() + ":" + other.tag);
     }
 }

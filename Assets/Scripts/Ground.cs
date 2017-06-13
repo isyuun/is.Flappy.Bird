@@ -2,55 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ground : _MonoBehaviour
+public class Ground : _Move
 {
-    private Vector3 org;
-
-    private Vector3 pos;
-
-    private float MIN_X = 0.0f;
-    private float MAX_X = 0.0f;
-
-    void Reset()
+    protected override void Reset()
     {
-        MIN_X = -transform.localScale.x / 2.0f;
-        MAX_X = transform.localScale.x * 1.5f - 1.0f;
-
-        //Debug.LogWarning(this.GetMethodName() + "\t" + "MIN_X:" + MIN_X + ", MAX_X:" + MAX_X/* + " - " + "MIN_Y:" + MIN_Y + ", MAX_Y:" + MAX_Y*/);
-
-        transform.position = this.org;
-        this.pos = transform.position;
+        base.Reset();
     }
 
-    // Use this for initialization
-    void Start()
+    protected override void Start()
     {
-        this.org = transform.position;
-        Reset();
+        base.Start();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        if (!GameManager.Play)
-        {
-            return;
-        }
-
-        //Debug.LogWarning(this.GetMethodName() + "\t" + "v3Pos.x:" + v3Pos.x + ", transform.position.x" + transform.position.x);
-
-        this.pos.x -= GameManager.SPEED_X;
-
-        if (this.pos.x <= MIN_X)
-        {
-            this.pos.x = MAX_X;
-        }
-
-        transform.position = this.pos;
+        base.Update();
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log(this.GetMethodName() + collision.collider.tag);
-    //}
 }

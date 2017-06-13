@@ -41,11 +41,36 @@ public class _MonoBehaviour : MonoBehaviour
         return pars;
     }
 
+    protected Bounds GetTotalMeshFilterBoundsAll(Transform objectTransform)
+    {
+        var meshFilter = objectTransform.GetComponent<MeshFilter>();
+        var result = meshFilter != null ? meshFilter.mesh.bounds : new Bounds();
+        //UnityEngine.Debug.LogWarning(this.GetMethodName() + ":" + objectTransform + ":" + result);
+        Vector3 min = Vector3.zero;
+        Vector3 max = Vector3.zero;
+        foreach (Transform transform in objectTransform)
+        {
+            var bounds = GetTotalMeshFilterBoundsAll(transform);
+            min += bounds.min;
+            max += bounds.max;
+            //UnityEngine.Debug.Log(this.GetMethodName() + ":" + transform + ":" + bounds + ":" + min + ":" + max);
+        }
+        result.Encapsulate(min);
+        result.Encapsulate(max);
+        var scaledMin = result.min;
+        scaledMin.Scale(objectTransform.localScale);
+        result.min = scaledMin;
+        var scaledMax = result.max;
+        scaledMax.Scale(objectTransform.localScale);
+        result.max = scaledMax;
+        //UnityEngine.Debug.LogWarning(this.GetMethodName() + ":" + objectTransform + ":" + result);
+        return result;
+    }
+
     protected Bounds GetTotalMeshFilterBounds(Transform objectTransform)
     {
         var meshFilter = objectTransform.GetComponent<MeshFilter>();
         var result = meshFilter != null ? meshFilter.mesh.bounds : new Bounds();
-
         foreach (Transform transform in objectTransform)
         {
             var bounds = GetTotalMeshFilterBounds(transform);
