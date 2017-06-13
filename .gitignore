@@ -73,3 +73,5 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 /.vs
+/is.Flappy.Bird.exe
+/is.Flappy.Bird_Data
