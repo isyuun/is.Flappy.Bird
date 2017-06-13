@@ -46,6 +46,9 @@ public class Bird : _MonoBehaviour
 
         GameManager.Dead = false;
 
+        //to stay in sky
+        rb.isKinematic = true;
+
         SetBirdSprite(GameManager.sprites["sprites_73"]);
     }
 
@@ -107,6 +110,9 @@ public class Bird : _MonoBehaviour
 
         Debug.LogWarning(this.GetMethodName() + ":" + collision + ":" + collision.collider + ":" + collision.collider.tag);
 
+        //test
+        //EnableRagdoll(); return;
+
         GameManager.Play = false;
         GameManager.Dead = true;
         Flip();
@@ -164,7 +170,6 @@ public class Bird : _MonoBehaviour
     {
         if (GameManager.ActionKeyDown())
         {
-            //Debug.LogWarning(this.GetMethodName() + "!!!START!!!");
             GameManager.Play = true;
         }
 
@@ -175,7 +180,6 @@ public class Bird : _MonoBehaviour
 
         if (GameManager.Dead)
         {
-            //Debug.LogWarning(this.GetMethodName() + "!!!DEAD!!!");
             EnableRagdoll();
             return;
         }
