@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Ground : _Move
 {
-    protected override void Reset()
+    protected override void _Reset()
     {
-        base.Reset();
+        base._Reset();
     }
 
     protected override void Start()

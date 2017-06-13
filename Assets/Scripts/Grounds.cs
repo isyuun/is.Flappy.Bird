@@ -26,7 +26,7 @@ public class Grounds : _MonoBehaviour
     }
 
 
-    private void Reset()
+    private void _Reset()
     {
         StopAnim();
     }
@@ -35,7 +35,7 @@ public class Grounds : _MonoBehaviour
     void Start()
     {
         ani = GetComponent<Animator>();
-        Reset();
+        _Reset();
     }
 
     // Update is called once per frame

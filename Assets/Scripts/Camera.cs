@@ -6,7 +6,7 @@ public class Camera : _MonoBehaviour
 {
     Vector3 org = Vector3.zero;
 
-    private void Reset()
+    private void _Reset()
     {
         Debug.Log(this.GetMethodName() + transform.position);
         //transform.position = this.org;
@@ -18,7 +18,7 @@ public class Camera : _MonoBehaviour
         Debug.Log(this.GetMethodName() + transform.position);
         this.org = Vector3.zero;
         org.z = -100;
-        Reset();
+        _Reset();
     }
 
     // Update is called once per frame

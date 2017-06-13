@@ -9,7 +9,7 @@ public class GameManager : _MonoBehaviour
     private const double MSC2SEC = 1000;
     private const int COUNT_DOWN = 1;
 
-    public static float SPEED_X = 0.55f;
+    public static float SPEED_X = 0.50f;
     public static bool Play { get; set; }
     public static bool Dead { get; set; }
 
@@ -33,7 +33,7 @@ public class GameManager : _MonoBehaviour
         }
     }
 
-    private void Reset()
+    private void _Reset()
     {
         //Debug.Log(this.GetMethodName());
         Play = false;
@@ -44,7 +44,7 @@ public class GameManager : _MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Reset();
+        _Reset();
     }
 
     // Update is called once per frame
@@ -58,13 +58,13 @@ public class GameManager : _MonoBehaviour
 
         if ((DateTime.Now - st).TotalMilliseconds < COUNT_DOWN * MSC2SEC)
         {
-            //Debug.Log(this.GetMethodName() + "\t" + (DateTime.Now - st).TotalMilliseconds);
+            //Debug.Log(this.GetMethodName() + "\t" + (DateTime.Now - GameManager.st).TotalMilliseconds);
             return;
         }
 
         if (GameManager.ActionKeyDown())
         {
-            //Debug.LogWarning(this.GetMethodName() + "!!!START!!!\t" + (DateTime.Now - st).TotalMilliseconds);
+            //Debug.LogWarning(this.GetMethodName() + "!!!START!!!\t" + (DateTime.Now - GameManager.st).TotalMilliseconds);
             GameManager.Play = true;
         }
     }

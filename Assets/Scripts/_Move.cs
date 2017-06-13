@@ -13,7 +13,7 @@ public class _Move : _MonoBehaviour {
     protected float MIN_X;
     protected float MAX_X;
 
-    protected virtual void Reset()
+    protected virtual void _Reset()
     {
         //Debug.Log(this.GetMethodName());
         this.pos = transform.position = this.org;
@@ -30,7 +30,7 @@ public class _Move : _MonoBehaviour {
     {
         this.org = transform.position;
         this.GAP_X = GetTotalMeshFilterBounds(transform).size.x / 2.0f;
-        Reset();
+        _Reset();
     }
 
     protected virtual void Update()

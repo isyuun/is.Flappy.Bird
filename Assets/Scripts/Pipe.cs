@@ -14,10 +14,10 @@ public class Pipe : _Move
     private float MAX_Y;
     private float MIN_Y;
 
-    protected override void Reset()
+    protected override void _Reset()
     {
         //Debug.Log(this.GetMethodName());
-        base.Reset();
+        base._Reset();
 
         this.pos.y = UnityEngine.Random.Range(MIN_Y, MAX_Y);
         transform.position = this.pos;

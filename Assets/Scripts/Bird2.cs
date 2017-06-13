@@ -49,9 +49,9 @@ public class Bird2 : Bird
         AniStop();
     }
 
-    protected override void Reset()
+    protected override void _Reset()
     {
-        base.Reset();
+        base._Reset();
         AniStart();
     }
 
