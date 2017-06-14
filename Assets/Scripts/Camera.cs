@@ -8,14 +8,14 @@ public class Camera : _MonoBehaviour
 
     private void _Reset()
     {
-        Debug.Log(this.GetMethodName() + transform.position);
+        //Debug.Log(this.GetMethodName() + transform.position);
         //transform.position = this.org;
     }
 
     // Use this for initialization
     void Start()
     {
-        Debug.Log(this.GetMethodName() + transform.position);
+        //Debug.Log(this.GetMethodName() + transform.position);
         this.org = Vector3.zero;
         org.z = -100;
         _Reset();

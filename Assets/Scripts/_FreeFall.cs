@@ -20,7 +20,7 @@ public class _FreeFall : MonoBehaviour
     {
         float up = 0.0f;  // Upward force
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.anyKeyDown)
         {
             up = 8.0f;  // Apply some upward force
             Debug.Log("Down");
