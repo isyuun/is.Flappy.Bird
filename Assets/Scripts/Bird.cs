@@ -5,7 +5,7 @@ public class Bird : _MonoBehaviour
 {
     private Vector3 org;
 
-    private const float GRAVITY_ACCELATION = 9.8f * 1.2f;
+    private const float GRAVITY_ACCELATION = 9.8f * 1.5f;
     private const float GRAVITY_UNIT = 10.0f;
     private const float GRAVITY_DRAG = 0.5f;
     private const float GRAVITY_JUMP = 30.0f * 0.8f;
