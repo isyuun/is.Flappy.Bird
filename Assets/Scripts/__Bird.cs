@@ -5,9 +5,9 @@ public class __Bird : _MonoBehaviour
 {
     private Vector3 org;
 
-    private const float GRAVITY_SCALE = 12.0f;
+    private const float GRAVITY_SCALE = 0.5f;
     private const float GRAVITY_ACCELATION = 9.8f;
-    private const float GRAVITY_JUMP_FORCE = 200.0f;
+    private const float GRAVITY_JUMP_FORCE = 150.0f;
 
     private float g = GRAVITY_ACCELATION * GRAVITY_SCALE;
 
@@ -40,7 +40,7 @@ public class __Bird : _MonoBehaviour
         {
             v = 0.0f;
             //up = 8.0f;  // Apply some upward force
-            up = GRAVITY_JUMP_FORCE * GRAVITY_SCALE * 1.5f;
+            up = GRAVITY_JUMP_FORCE * GRAVITY_SCALE;
         }
 
         this.delta = v * t + (up - g) * t * t;

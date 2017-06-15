@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// when bird collide top and bottom
 /// </summary>
-public class Bird1 : __Bird
+public class Bird1 : __Plane
 {
     private float MAX_LEVEL = 1.0f;
     private float MIN_LEVEL = 0.2f;

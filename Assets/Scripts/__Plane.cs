@@ -17,7 +17,7 @@ public class __Plane : _MonoBehaviour
 
     protected virtual void _Reset()
     {
-        _riseForce = 3000.0f;
+        _riseForce = 70.0f;
     }
 
     protected virtual void Update()

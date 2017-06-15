@@ -9,7 +9,7 @@ public class GameManager : _MonoBehaviour
     private const double MSC2SEC = 1000;
     private const int COUNT_DOWN = 1;
 
-    public static float SPEED_X = 0.50f;
+    public static float SPEED_X = 0.005f;
     public static bool Play { get; set; }
     public static bool Dead { get; set; }
 
