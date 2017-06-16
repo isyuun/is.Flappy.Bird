@@ -9,6 +9,8 @@ public class __Plane : _MonoBehaviour
 
     public float _riseForce; // 점프 힘
 
+    protected float delta;
+
     protected virtual void Start()
     {
         this.rb = GetComponent<Rigidbody>();
