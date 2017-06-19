@@ -7,9 +7,9 @@ public class Pipe : _Move
 {
     public GameObject grounds;
 
-    private const float GAP_LEVEL = 20.0f;
-    private const float MIN_LEVEL = -50.0f;
-    private const float MAX_LEVEL = 50.0f;
+    private const float GAP_LEVEL = 0.2f;
+    private const float MIN_LEVEL = -0.5f;
+    private const float MAX_LEVEL = 0.5f;
 
     private float MAX_Y;
     private float MIN_Y;
@@ -19,14 +19,14 @@ public class Pipe : _Move
         //Debug.Log(this.GetMethodName());
         base._Reset();
 
-        MIN_Y = MIN_LEVEL + GAP_LEVEL + GetTotalMeshFilterBounds(grounds.transform).size.y;
+        MIN_Y = MIN_LEVEL + GAP_LEVEL + GetTotalBounds(grounds.transform).size.y;
         MAX_Y = MAX_LEVEL - GAP_LEVEL;
 
         this.pos.y = UnityEngine.Random.Range(MIN_Y, MAX_Y);
 
         transform.position = this.pos;
 
-        //Debug.Log(this.GetMethodName() + "\t" + "this.pos.y:" + this.pos.y + ", MIN_Y:" + MIN_Y + ", MAX_Y:" + MAX_Y);
+        //Debug.Log(this.GetMethodName() + "this.pos:" + this.pos + "\t" + ", MIN_Y:" + MIN_Y + ", MAX_Y:" + MAX_Y);
     }
 
     protected override void Start()

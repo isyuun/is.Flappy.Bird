@@ -27,8 +27,8 @@ public class Bird3 : Bird2
         this.rb.constraints = RigidbodyConstraints.None;
         this.rb.constraints |= RigidbodyConstraints.FreezePositionX;
         this.rb.constraints |= RigidbodyConstraints.FreezePositionZ;
-        this.rb.constraints |= RigidbodyConstraints.FreezeRotationX;
-        this.rb.constraints |= RigidbodyConstraints.FreezeRotationY;
+        //this.rb.constraints |= RigidbodyConstraints.FreezeRotationX;
+        //this.rb.constraints |= RigidbodyConstraints.FreezeRotationY;
         //this.rb.constraints |= RigidbodyConstraints.FreezeRotationZ;
 
 
@@ -132,7 +132,7 @@ public class Bird3 : Bird2
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(this.GetMethodName() + ":" + collision.collider.tag);
+        //Debug.LogWarning(this.GetMethodName() + ":" + collision.collider.tag);
         Die(collision);
     }
 

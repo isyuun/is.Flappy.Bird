@@ -18,8 +18,8 @@ public class Bird : __Bird
     protected override void _Reset()
     {
         //Debug.Log(this.GetMethodName() + ":" + skys + ":" + grounds);
-        MAX_LEVEL = GetTotalMeshFilterBounds(this.skys.transform).size.y - (bird.radius * this.skys.transform.localScale.y);
-        MIN_LEVEL = GetTotalMeshFilterBounds(this.grounds.transform).size.y + (bird.radius * this.grounds.transform.localScale.y);
+        MAX_LEVEL = GetTotalBounds(this.skys.transform).size.y - (bird.radius * this.skys.transform.localScale.y);
+        MIN_LEVEL = GetTotalBounds(this.grounds.transform).size.y + (bird.radius * this.grounds.transform.localScale.y);
         //Debug.LogWarning(this.GetMethodName() + "\t" + "MIN_LEVEL:" + MIN_LEVEL + ", MAX_LEVEL:" + MAX_LEVEL/* + " - " + "MIN_Y:" + MIN_Y + ", MAX_Y:" + MAX_Y*/);
         base._Reset();
     }
