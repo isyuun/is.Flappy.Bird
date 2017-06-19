@@ -5,10 +5,11 @@ using UnityEngine;
 /// <summary>
 /// when bird collide top and bottom
 /// </summary>
-public class Bird1 : __Plane
+public class Bird : __Bird
 {
     private float MAX_LEVEL = 1.0f;
     private float MIN_LEVEL = 0.2f;
+    private float GRAVITY_DRAG = 0.5f;
 
     private SphereCollider bird;
     public GameObject skys;
@@ -42,19 +43,21 @@ public class Bird1 : __Plane
     {
         base.Update();
 
-        Vector3 position = transform.position;
         //when bird collide bottom
-        if (position.y <= MIN_LEVEL)
+        if (this.pos.y <= MIN_LEVEL)
         {
-            position.y = MIN_LEVEL;
-            //this.v = -this.v * GRAVITY_DRAG;
+            //Debug.LogWarning(this.GetMethodName() + ":" + this.pos.y + ":MIN_LEVEL:" + MIN_LEVEL);
+            this.pos.y = MIN_LEVEL;
+            this.v = -this.v * GRAVITY_DRAG;
         }
         //when bird collide top
-        else if (position.y >= MAX_LEVEL)
+        else if (this.pos.y >= MAX_LEVEL)
         {
-            position.y = MAX_LEVEL;
-            //this.v = -this.v * GRAVITY_DRAG;
+            //Debug.LogWarning(this.GetMethodName() + ":" + this.pos.y + ":MAX_LEVEL:" + MAX_LEVEL);
+            this.pos.y = MAX_LEVEL;
+            this.v = -this.v * GRAVITY_DRAG;
         }
-        transform.position = position;
+
+        transform.position = this.pos;
     }
 }

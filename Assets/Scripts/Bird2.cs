@@ -5,15 +5,12 @@ using UnityEngine;
 /// <summary>
 /// TBD:Bitching Bird(???)
 /// </summary>
-public class Bird2 : Bird1
+public class Bird2 : Bird
 {
-    private Rigidbody rb;
-
     private SpriteRenderer rd;
 
     protected override void Start()
     {
-        this.rb = GetComponent<Rigidbody>();
         this.rd = GameObject.Find("bird2d").GetComponent<SpriteRenderer>();
         base.Start();
     }
@@ -35,6 +32,7 @@ public class Bird2 : Bird1
         this.rb.constraints |= RigidbodyConstraints.FreezePositionZ;
         this.rb.constraints |= RigidbodyConstraints.FreezeRotationX;
         this.rb.constraints |= RigidbodyConstraints.FreezeRotationY;
+        //this.rb.constraints |= RigidbodyConstraints.FreezeRotationZ;
 
 
         //set default sprite
@@ -59,17 +57,17 @@ public class Bird2 : Bird1
         if (GameManager.Dead)
         {
             EnableRagdoll();
-            //test 
-            //return;
+            //this.pos.z = -10.0f;
         }
         else
         {
             DisableRagdoll();
+            //this.pos.z = 0.0f;
         }
 
-        base.Update();
+        PitchBird(this.delta);
 
-        //PitchBird(this.delta);
+        base.Update();
     }
 
     // vertical flip
@@ -88,7 +86,7 @@ public class Bird2 : Bird1
     void DisableRagdoll()
     {
         //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
-        rb.useGravity = true;
+        rb.useGravity = false;
         rb.isKinematic = false;
         rb.detectCollisions = true;
     }
@@ -99,7 +97,7 @@ public class Bird2 : Bird1
     void EnableRagdoll()
     {
         //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
-        rb.useGravity = true;
+        rb.useGravity = false;
         rb.isKinematic = false;
         rb.detectCollisions = true;
     }
@@ -143,14 +141,16 @@ public class Bird2 : Bird1
         //}
 
         //set Rotate Speed
+        //delta *= 100.0f;
         float rotationSpeed = 200.0f;
-        if (delta > 0.0f)
+        if (delta < 0.0f)
         {
-            rotationSpeed *= 4;
+            Debug.LogWarning(this.GetMethodName() + ":" + delta.ToString("f4"));
+            transform.rotation = Quaternion.identity;
         }
 
         //calculate pitch
-        Vector3 pitch = Vector3.forward * delta * rotationSpeed * Time.deltaTime;
+        Vector3 pitch = Vector3.forward * delta * rotationSpeed * Time.deltaTime * 100.0f;
 
         //check rotation degrees
         Quaternion rotation = transform.rotation;
@@ -159,14 +159,11 @@ public class Bird2 : Bird1
         Vector3 axis = Vector3.zero;
         transform.rotation.ToAngleAxis(out angle, out axis);
 
-        //Debug.Log(this.GetMethodName() + ":" + delta.ToString("f4") + ":" + (angle * axis.z).ToString("f4")/* + ":" + rotation.z.ToString("f4")*/ + ":angle:" + angle + ":rotation:" + rotation + ":axis:" + axis + ":eulerAngles:" + eulerAngles);
-
-        //make angle(+-)
-        angle *= axis.z;
+        Debug.Log(this.GetMethodName() + ":" + delta.ToString("f4") + ":" + (angle * axis.z).ToString("f4") + ":pitch:" + pitch/* + ":" + rotation.z.ToString("f4") + ":angle:" + angle + ":rotation:" + rotation + ":axis:" + axis + ":eulerAngles:" + eulerAngles*/);
 
         if (!GameManager.Dead)
         {
-            if ((angle > 35.0f || angle < -90.0f))
+            if (((angle * axis.z) > 35.0f/* || (angle * axis.z) < -90.0f*/))
             {
                 return;
             }

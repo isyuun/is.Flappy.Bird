@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class __Bird : _MonoBehaviour
 {
+    protected Rigidbody rb;
+
     private Vector3 org;
 
     private const float GRAVITY_SCALE = 0.5f;
@@ -11,14 +13,16 @@ public class __Bird : _MonoBehaviour
 
     private float g = GRAVITY_ACCELATION * GRAVITY_SCALE;
 
-    private float v = 0.0f;
-    private Vector3 pos;
+    protected float v = 0.0f;
+    protected Vector3 pos;
+    private Vector3 v3;
 
     protected float delta;
 
     // Use this for initialization
     protected virtual void Start()
     {
+        this.rb = GetComponent<Rigidbody>();
         this.org = transform.position;
         _Reset();
     }
@@ -38,20 +42,28 @@ public class __Bird : _MonoBehaviour
 
         if (GameManager.ActionKeyDown())
         {
+            //Debug.LogWarning(this.GetMethodName() + ">>" + (transform.position.y - v3.y).ToString("f4") + ":position.y:" + transform.position.y.ToString("f4") + ":v3.y:" + v3.y.ToString("f4"));
+            this.v3 = transform.position;
             v = 0.0f;
             //up = 8.0f;  // Apply some upward force
             up = GRAVITY_JUMP_FORCE * GRAVITY_SCALE;
         }
 
-        this.delta = v * t + (up - g) * t * t;
-        v = v + (up - g) * t;
-        this.pos.y += this.delta;
-
-        if (GameManager.Dead)
+        float diff = (transform.position.y - this.v3.y);
+        //Debug.Log(this.GetMethodName() + ":" + diff.ToString("f4") + ":position.y:" + transform.position.y.ToString("f4") + ":v3.y:" + v3.y.ToString("f4"));
+        if (this.v3 != Vector3.zero && diff > 0.0f && diff >= GameManager.MAX_JUMP)
         {
-            this.pos.z = -10.0f;
+            //Debug.LogWarning(this.GetMethodName() + "]]" + diff.ToString("f4") + ":position.y:" + transform.position.y.ToString("f4") + ":v3.y:" + v3.y.ToString("f4"));
+            this.v3 = Vector3.zero;
+            up = 0.0f;
         }
 
+        float delta = v * t + (up - g) * t * t;
+        v = v + (up - g) * t;
+        this.pos.y += delta;
+
+        //this.delta = delta;
+        this.delta = pos.y - transform.position.y;
         transform.position = this.pos;
     }
 }

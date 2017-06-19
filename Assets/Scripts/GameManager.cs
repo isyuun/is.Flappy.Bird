@@ -12,6 +12,7 @@ public class GameManager : _MonoBehaviour
     public static float SPEED_X = 0.005f;
     public static bool Play { get; set; }
     public static bool Dead { get; set; }
+    public static float MAX_JUMP = 0.1f;
 
     private static DateTime st;
 
