@@ -10,8 +10,8 @@ public class __Plane : _MonoBehaviour
 
     protected float v = 0.0f;
     protected Vector3 pos;
-    protected float delta;
 
+    private float delta;
     private Vector3 v3;
 
     protected virtual void Start()
@@ -48,5 +48,9 @@ public class __Plane : _MonoBehaviour
 
         this.delta = transform.position.y - pos.y;
         this.pos = transform.position;
+
+        PitchBird(this.delta);
     }
+
+    protected virtual void PitchBird(float delta) { }
 }

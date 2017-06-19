@@ -7,9 +7,10 @@ public class _Move : _MonoBehaviour
 {
     public GameObject skys;
 
-    protected Vector3 org;
+    private Vector3 org;
     protected Vector3 pos;
 
+    private float GAP_X;
     protected float MIN_X;
     protected float MAX_X;
 
@@ -18,8 +19,9 @@ public class _Move : _MonoBehaviour
         //Debug.Log(this.GetMethodName());
         this.pos = transform.position = this.org;
 
-        this.MIN_X = -(GetTotalMeshFilterBounds(transform).size.x) * this.skys.transform.localScale.x;
-        this.MAX_X = (GetTotalMeshFilterBoundsAll(this.skys.transform).size.x);
+        this.GAP_X = (GetTotalMeshFilterBounds(transform).size.x) / 2.0f;
+        this.MIN_X = -(GetTotalMeshFilterBounds(transform).size.x) + this.GAP_X;
+        this.MAX_X = (GetTotalMeshFilterBoundsAll(this.skys.transform).size.x) + this.GAP_X;
 
         //Debug.Log(this.GetMethodName() + "\t" + "this.pos.x:" + this.pos.x + ", MIN_X:" + MIN_X + ", MAX_X:" + MAX_X);
     }

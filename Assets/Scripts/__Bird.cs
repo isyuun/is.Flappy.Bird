@@ -15,9 +15,9 @@ public class __Bird : _MonoBehaviour
 
     protected float v = 0.0f;
     protected Vector3 pos;
-    private Vector3 v3;
 
-    protected float delta;
+    private float delta;
+    private Vector3 v3;
 
     // Use this for initialization
     protected virtual void Start()
@@ -58,12 +58,17 @@ public class __Bird : _MonoBehaviour
             up = 0.0f;
         }
 
-        float delta = v * t + (up - g) * t * t;
+        float d = v * t + (up - g) * t * t;
         v = v + (up - g) * t;
-        this.pos.y += delta;
+        this.pos.y += d;
 
-        //this.delta = delta;
         this.delta = pos.y - transform.position.y;
         transform.position = this.pos;
+
+        PitchBird(this.delta);
+    }
+
+    protected virtual void PitchBird(float delta)
+    {
     }
 }
