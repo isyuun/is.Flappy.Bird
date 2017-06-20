@@ -75,7 +75,7 @@ public class Bird2 : Bird
 
         if (jump && jumpEnd.y > transform.position.y)
         {
-            Debug.LogWarning(this.GetMethodName() + "[" + TAG + "]" + "[JUMP][ED][DIS]" + (jumpEnd.y - jumpStart.y).ToString("f2"));
+            //Debug.LogWarning(this.GetMethodName() + "[" + TAG + "]" + "[JUMP][ED][DIS]" + (jumpEnd.y - jumpStart.y).ToString("f2"));
             jump = false;
         }
 

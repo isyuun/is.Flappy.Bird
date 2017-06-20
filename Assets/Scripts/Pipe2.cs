@@ -24,10 +24,10 @@ public class Pipe2 : Pipe
         GetChildGameObject(gameObject, "Bottom").transform.position = this.bottom;
 
         //get empty
-        Transform empty = GetChildGameObject(gameObject, "Empty").transform;
-        Vector3 scale = empty.localScale;
-        scale.y = GameManager.PIPE_EMPTY;
-        empty.localScale = scale;
+        Transform score = GetChildGameObject(gameObject, "Score").transform;
+        Vector3 scale = score.localScale;
+        scale.y = GameManager.PIPE_SCORE;
+        score.localScale = scale;
 
         //position calcurate
         float h = scale.y / 2.0f;

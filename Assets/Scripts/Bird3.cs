@@ -118,7 +118,7 @@ public class Bird3 : Bird2
             return;
         }
 
-        //Debug.LogWarning(this.GetMethodName() + ":" + collision + ":" + collision.collider + ":" + collision.collider.tag);
+        Debug.LogWarning(this.GetMethodName() + ":" + collision + ":" + collision.collider + ":" + collision.collider.tag);
 
         //test
         EnableRagdoll(); return;

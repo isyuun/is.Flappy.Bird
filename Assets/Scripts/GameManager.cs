@@ -6,15 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : _MonoBehaviour
 {
+    //game difficault settings
+    public static float SPEED_X = 0.004f;
+    public static float PIPE_SCORE = 0.21f;
+    public static float PIPE_GAP = 0.35f;
+
     private const double MSC2SEC = 1000;
     private const int COUNT_DOWN = 1;
 
     public static bool Play { get; set; }
     public static bool Dead { get; set; }
-
-    public static float SPEED_X = 0.005f;
-    public static float PIPE_EMPTY = 0.2f;
-    public static float PIPE_GAP = 0.3f;
 
     //gravity constants
     public const float GRAVITY_SCALE = 0.4f;
