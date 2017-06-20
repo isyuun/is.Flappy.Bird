@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// TBD:Bitching Bird(???)
+/// Die Bird
 /// </summary>
 public class Bird3 : Bird2
 {

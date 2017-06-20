@@ -59,4 +59,34 @@ public class Bird2 : Bird
         transform.Rotate(pitch);
     }
 
+    Vector3 jumpStart;
+    Vector3 jumpEnd;
+    bool jump = false;
+
+    protected override void Update()
+    {
+        base.Update();
+
+        string TAG = "__Bird";
+        if (this is __Plane)
+        {
+            TAG = "__Plane";
+        }
+
+        if (jump && jumpEnd.y > transform.position.y)
+        {
+            Debug.LogWarning(this.GetMethodName() + "[" + TAG + "]" + "[JUMP][ED][DIS]" + (jumpEnd.y - jumpStart.y).ToString("f2"));
+            jump = false;
+        }
+
+        jumpEnd = transform.position;
+
+        if (GameManager.ActionKeyDown())
+        {
+            jumpStart = transform.position;
+            //Debug.LogWarning(this.GetMethodName() + "[" + TAG + "]" + "[JUMP][ST][POS]" + jumpStart.y.ToString("f2"));
+            jump = true;
+        }
+
+    }
 }

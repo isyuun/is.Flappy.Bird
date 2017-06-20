@@ -86,6 +86,23 @@ public class _MonoBehaviour : MonoBehaviour
         return result;
     }
 
+    protected GameObject GetChildGameObject(GameObject fromGameObject, string withName)
+    {
+        //Author: Isaac Dart, June-13.
+        Transform[] ts = fromGameObject.transform.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in ts) if (t.gameObject.name == withName) return t.gameObject;
+        return null;
+    }
+
+    protected GameObject[] GetChildsGameObject(GameObject fromGameObject, string withName)
+    {
+        //Author: Isaac Dart, June-13.
+        Transform[] ts = fromGameObject.transform.GetComponentsInChildren<Transform>(true);
+        List<GameObject> ret = new List<GameObject>();
+        foreach (Transform t in ts) if (t.gameObject.name == withName) ret.Add(t.gameObject);
+        return ret.ToArray();
+    }
+
     //// Use this for initialization
     //protected virtual void Awake()
     //{

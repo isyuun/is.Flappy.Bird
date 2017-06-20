@@ -9,10 +9,20 @@ public class GameManager : _MonoBehaviour
     private const double MSC2SEC = 1000;
     private const int COUNT_DOWN = 1;
 
-    public static float SPEED_X = 0.005f;
     public static bool Play { get; set; }
     public static bool Dead { get; set; }
-    public static float MAX_JUMP = 0.1f;
+
+    public static float SPEED_X = 0.005f;
+    public static float PIPE_EMPTY = 0.2f;
+    public static float PIPE_GAP = 0.3f;
+
+    //gravity constants
+    public const float GRAVITY_SCALE = 0.4f;
+    public const float GRAVITY_ACCEL = 9.8f;
+    public static float JUMP_FORCE = 120.0f;
+
+    //jump limit
+    public static float JUMP_LIMIT = 0.13f;
 
     private static DateTime st;
 

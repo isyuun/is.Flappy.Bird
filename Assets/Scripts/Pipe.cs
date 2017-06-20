@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Pipe Vertical Move
+/// </summary>
 public class Pipe : _Move
 {
     public GameObject grounds;
