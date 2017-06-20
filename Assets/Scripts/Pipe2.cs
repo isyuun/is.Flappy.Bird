@@ -26,7 +26,7 @@ public class Pipe2 : Pipe
         //get empty
         Transform score = GetChildGameObject(gameObject, "Score").transform;
         Vector3 scale = score.localScale;
-        scale.y = GameManager.PIPE_SCORE;
+        scale.y = GameManager.PIPE_GAP;
         score.localScale = scale;
 
         //position calcurate

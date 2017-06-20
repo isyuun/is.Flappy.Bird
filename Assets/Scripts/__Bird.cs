@@ -67,7 +67,6 @@ public class __Bird : _MonoBehaviour
         PitchBird(this.delta);
     }
 
-    protected virtual void PitchBird(float delta)
-    {
-    }
+    protected virtual void PitchBird(float delta) { }
+    protected virtual void Die(Collision collision) { }
 }

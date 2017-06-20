@@ -4,7 +4,6 @@ using UnityEngine;
 
 /// <summary>
 /// TBD:Bitching Bird(???)
-/// Die Bird
 /// </summary>
 public class Bird3 : Bird2
 {
@@ -21,17 +20,8 @@ public class Bird3 : Bird2
     {
         base._Reset();
 
-        //to stay in sky
-        this.rb.isKinematic = true;
-
-        //dont strange turn
-        this.rb.constraints = RigidbodyConstraints.None;
-        this.rb.constraints |= RigidbodyConstraints.FreezePositionX;
-        this.rb.constraints |= RigidbodyConstraints.FreezePositionZ;
-        //this.rb.constraints |= RigidbodyConstraints.FreezeRotationX;
-        //this.rb.constraints |= RigidbodyConstraints.FreezeRotationY;
-        //this.rb.constraints |= RigidbodyConstraints.FreezeRotationZ;
-
+        //set rigidbody setting
+        SetRigidbodySettings();
 
         //set default sprite
         SetBirdSprite(GameManager.sprites["sprites_73"]);
@@ -66,6 +56,30 @@ public class Bird3 : Bird2
         base.Update();
     }
 
+    /// <summary>
+    /// Set Rigidbody Settings
+    /// </summary>
+    private void SetRigidbodySettings()
+    {
+        //to stay in sky
+        this.rb.isKinematic = true;
+        //don't strange turn
+        this.rb.constraints = RigidbodyConstraints.None;
+        this.rb.constraints |= RigidbodyConstraints.FreezePositionX;
+        this.rb.constraints |= RigidbodyConstraints.FreezePositionZ;
+        //this.rb.constraints |= RigidbodyConstraints.FreezeRotationX;
+        //this.rb.constraints |= RigidbodyConstraints.FreezeRotationY;
+        //this.rb.constraints |= RigidbodyConstraints.FreezeRotationZ;
+    }
+
+    protected override void Die(Collision collision)
+    {
+        base.Die(collision);
+
+        Flip();
+        SetBirdSprite(Resources.Load<Sprite>("Splites/bird"));
+    }
+
     // vertical flip
     private void Flip()
     {
@@ -79,7 +93,7 @@ public class Bird3 : Bird2
     /// <summary>
     /// use when live
     /// </summary>
-    void DisableRagdoll()
+    protected void DisableRagdoll()
     {
         //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
         if (this is __Bird)
@@ -97,7 +111,7 @@ public class Bird3 : Bird2
     /// <summary>
     /// use when dead
     /// </summary>
-    void EnableRagdoll()
+    protected void EnableRagdoll()
     {
         //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
         rb.useGravity = true;
@@ -109,36 +123,5 @@ public class Bird3 : Bird2
     {
         //Debug.Log(this.GetMethodName() + ":" + rd + ":" + sprite);
         rd.sprite = sprite;
-    }
-
-    protected virtual void Die(Collision collision)
-    {
-        if (GameManager.Dead)
-        {
-            return;
-        }
-
-        Debug.LogWarning(this.GetMethodName() + ":" + collision + ":" + collision.collider + ":" + collision.collider.tag);
-
-        //test
-        EnableRagdoll(); return;
-
-        GameManager.Play = false;
-        GameManager.Dead = true;
-
-        Flip();
-
-        SetBirdSprite(Resources.Load<Sprite>("Splites/bird"));
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        //Debug.LogWarning(this.GetMethodName() + ":" + collision.collider.tag);
-        Die(collision);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //Debug.Log(this.GetMethodName() + ":" + other.tag);
     }
 }

@@ -8,10 +8,6 @@ public class _Move : _MonoBehaviour
     public GameObject skys;
 
     private Vector3 org;
-    public void SetXPos(float x)
-    {
-        org.x = x;
-    }
     protected Vector3 pos;
 
     private float GAP_X;

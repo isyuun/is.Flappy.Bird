@@ -6,26 +6,28 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : _MonoBehaviour
 {
-    //game difficault settings
-    public static float SPEED_X = 0.004f;
-    public static float PIPE_SCORE = 0.21f;
-    public static float PIPE_GAP = 0.35f;
+    /// <summary>
+    /// jump limit
+    /// </summary>
+    [Obsolete("Jump limit value not use this time", true)]
+    public static float JUMP_LIMIT = 0.13f;
+    //gravity constants
+    public const float GRAVITY_SCALE = 0.25f;
+    public const float GRAVITY_ACCEL = 9.8f;
+    public const float JUMP_FORCE = 140.0f;
 
-    private const double MSC2SEC = 1000;
-    private const int COUNT_DOWN = 1;
+    //game difficault settings
+    public static float SPEED_X = 0.005f;
+    public static float PIPE_GAP = 0.20f;
+    public static float PIPE_DIS = 0.35f;
 
     public static bool Play { get; set; }
     public static bool Dead { get; set; }
 
-    //gravity constants
-    public const float GRAVITY_SCALE = 0.4f;
-    public const float GRAVITY_ACCEL = 9.8f;
-    public static float JUMP_FORCE = 120.0f;
-
-    //jump limit
-    public static float JUMP_LIMIT = 0.13f;
-
-    private static DateTime st;
+    //start time
+    private DateTime st;
+    private const double MSC2SEC = 1000;
+    private const int COUNT_DOWN = 3;
 
     public static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
 

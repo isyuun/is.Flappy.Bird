@@ -3,102 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Animating Bird
+/// Die!!! Bird
 /// </summary>
 public class Bird4 : Bird3
 {
-    private Animator[] ani;
-
-    private void AniStart()
+    protected virtual void Die(Collision collision)
     {
-        //Debug.Log(this.GetMethodName() + ":" + ani);
-        foreach (Animator item in ani)
-        {
-            item.Play("flap");
-            item.SetBool("IsFlappy", true);
-        }
-    }
-
-    private void AniStop()
-    {
-        //Debug.Log(this.GetMethodName() + ":" + ani);
-        foreach (Animator item in ani)
-        {
-            item.Play("idle");
-            item.SetBool("IsFlappy", false);
-        }
-    }
-
-    private void AniSpeedUP()
-    {
-        foreach (Animator item in ani)
-        {
-            item.speed = 1.2f;
-        }
-    }
-
-    private void AniSpeedDOWN()
-    {
-        foreach (Animator item in ani)
-        {
-            item.speed = 1.0f;
-        }
-    }
-
-    protected override void Die(Collision collision)
-    {
-        base.Die(collision);
-        AniStop();
-    }
-
-    protected override void PitchBird(float delta)
-    {
-        //Debug.Log(this.GetMethodName() + ":" + delta.ToString("f4"));
-        if (!GameManager.Dead)
-        {
-            if (delta > 0.0f)
-            {
-                AniStart();
-            }
-            else
-            {
-                AniStop();
-            }
-        }
-        base.PitchBird(delta);
-    }
-
-    protected override void Start()
-    {
-        ani = GetComponentsInChildren<Animator>();
-        base.Start();
-    }
-
-    protected override void _Reset()
-    {
-        base._Reset();
-        AniStart();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
-        if (!GameManager.Play && !GameManager.Dead)
+        if (GameManager.Dead)
         {
             return;
         }
 
-        if (!GameManager.Dead)
-        {
-            if (GameManager.ActionKeyDown())
-            {
-                AniSpeedUP();
-            }
-            else
-            {
-                AniSpeedDOWN();
-            }
-        }
+        Debug.LogWarning(this.GetMethodName() + ":" + collision + ":" + collision.collider + ":" + collision.collider.tag);
+
+        //test
+        EnableRagdoll(); return;
+
+        GameManager.Play = false;
+        GameManager.Dead = true;
+
+        base.Die(collision);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //Debug.LogWarning(this.GetMethodName() + ":" + collision.collider.tag);
+        Die(collision);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //Debug.Log(this.GetMethodName() + ":" + other.tag);
     }
 }

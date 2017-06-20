@@ -10,7 +10,7 @@ public class Pipes : _MonoBehaviour
     Vector3 org;
     GameObject[] pipes;
 
-    private void Start()
+    private void Awake()
     {
         if (this.skys == null)
         {
@@ -22,23 +22,25 @@ public class Pipes : _MonoBehaviour
         }
         this.org = transform.position;
         pipes = GetChildsGameObject(gameObject, "Pipe");
-        _Reset();
+        Move();
     }
 
-    private void _Reset()
+    private void Move()
     {
+        Vector3 org, pos;
         float max = GetTotalBoundsAll(grounds.transform).size.x;
-        float gap = GameManager.PIPE_GAP;
         for (int i = 0; i < pipes.Length; i++)
         {
-            Vector3 pos = pipes[i].transform.position;
-            pos.x = this.org.x + (gap * (float)i);
-            Debug.Log(this.GetMethodName() + "[" + i + "]" + (gap * (float)i).ToString("f2") + ":" + pipes[i].transform.position.x.ToString("f2") + "->" + pos.x.ToString("f2"));
-            //pipes[i].transform.position = pos;
-            pipes[i].GetComponent<_Move>().SetXPos(pos.x);
+            float dis = GameManager.PIPE_DIS * (float)i;
+            org = pos = pipes[i].transform.position;
+            //move pipe
+            pos.x = this.org.x + dis;
+            Debug.Log(this.GetMethodName() + "[" + i + "]" + dis.ToString("f2") + ":" + org.x.ToString("f2") + "->" + pos.x.ToString("f2"));
+            pipes[i].transform.position = pos;
+            //disable pipe
             if (pipes[i].transform.position.x > max)
             {
-                //Debug.LogWarning(this.GetMethodName() + "[" + i + "]" + (gap * (float)i).ToString("f2") + ":" + pipes[i].transform.position.x.ToString("f2") + "->" + pos.x.ToString("f2"));
+                Debug.LogWarning(this.GetMethodName() + "[" + i + "]" + dis.ToString("f2") + ":" + org.x.ToString("f2") + "->" + pos.x.ToString("f2"));
                 pipes[i].SetActive(false);
             }
         }
