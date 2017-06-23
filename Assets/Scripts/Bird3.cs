@@ -96,14 +96,8 @@ public class Bird3 : Bird2
     protected void DisableRagdoll()
     {
         //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
-        if (this is __Bird)
-        {
-            rb.useGravity = false;
-        }
-        else
-        {
-            rb.useGravity = true;
-        }
+        //never setting gravity
+        //rb.useGravity = false;
         rb.isKinematic = false;
         rb.detectCollisions = true;
     }
@@ -114,6 +108,7 @@ public class Bird3 : Bird2
     protected void EnableRagdoll()
     {
         //Debug.Log(this.GetMethodName() + ":" + GameManager.Dead);
+        // user gravity when die
         rb.useGravity = true;
         rb.isKinematic = false;
         rb.detectCollisions = true;

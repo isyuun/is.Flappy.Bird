@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : _MonoBehaviour
 {
-    /// <summary>
-    /// jump limit
-    /// </summary>
-    [Obsolete("Jump limit value not use this time", true)]
-    public static float JUMP_LIMIT = 0.13f;
     //gravity constants
     public const float GRAVITY_SCALE = 0.25f;
     public const float GRAVITY_ACCEL = 9.8f;

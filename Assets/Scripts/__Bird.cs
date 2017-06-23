@@ -26,6 +26,11 @@ public class __Bird : _MonoBehaviour
 
     protected virtual void _Reset()
     {
+        Vector3 gravity = Physics.gravity;
+        gravity.y = 0.0f;
+        Physics.gravity = gravity;
+        rb.useGravity = false;
+        rb.isKinematic = true;
         transform.position = this.org;
         this.pos = transform.position;
     }
@@ -45,17 +50,6 @@ public class __Bird : _MonoBehaviour
             //up = 8.0f;  // Apply some upward force
             up = j;
         }
-
-        //FUCK
-        //float diff = (transform.position.y - this.v3.y);
-        ////Debug.Log(this.GetMethodName() + ":" + diff.ToString("f4") + ":position.y:" + transform.position.y.ToString("f4") + ":v3.y:" + v3.y.ToString("f4"));
-        //if (this.v3 != Vector3.zero && diff > 0.0f && diff >= (GameManager.JUMP_LIMIT / 2.0f))
-        //{
-        //    //Debug.LogWarning(this.GetMethodName() + "]]" + diff.ToString("f4") + ":position.y:" + transform.position.y.ToString("f4") + ":v3.y:" + v3.y.ToString("f4"));
-        //    this.v3 = Vector3.zero;
-        //    up = 0.0f;
-        //    return;
-        //}
 
         float d = v * t + (up - g) * t * t;
         v = v + (up - g) * t;
