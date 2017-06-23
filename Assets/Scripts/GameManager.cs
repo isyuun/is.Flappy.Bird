@@ -8,7 +8,7 @@ public class GameManager : _MonoBehaviour
 {
     //gravity constants
     public const float GRAVITY_SCALE = 0.25f;
-    public const float GRAVITY_ACCEL = 9.8f;
+    public const float GRAVITY_ACCEL = 9.81f;
     public const float JUMP_FORCE = 140.0f;
 
     //game difficault settings
